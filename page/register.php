@@ -12,18 +12,37 @@
     <link rel="stylesheet" href="index.css">
     <title>Document</title>
 </head>
+<style>
+    .bg-linear-gradient {
+        background-image: linear-gradient(180deg,
+                rgba(var(--bs-body-bg-rgb), 0.01),
+                rgba(var(--bs-body-bg-rgb), 1) 85%),
+            radial-gradient(ellipse at top left,
+                rgba(var(--bs-primary-rgb), 0.5),
+                transparent 50%),
+            radial-gradient(ellipse at top right,
+                rgba(var(--bd-accent-rgb), 0.5),
+                transparent 50%),
+            radial-gradient(ellipse at center right,
+                rgba(var(--bd-violet-rgb), 0.5),
+                transparent 50%),
+            radial-gradient(ellipse at center left,
+                rgba(var(--bd-pink-rgb), 0.5),
+                transparent 50%);
+    }
+</style>
 
-<body>
+<body class="bg-linear-gradient">
     <?php
     include "../component/navbar.php";
     ?>
-    <div class="mx-auto pb-3 container bg-secondary rounded">
+    <div class="mx-auto pb-3 container bg-secondary rounded" style="background-color:rad;">
         <h1>
             ลงทะเบียนผู้สมัคร
         </h1>
         <form class="p-3 bg-white rounded">
             <div>
-                <h2 class="p-2 bg-danger rounded">
+                <h2 class="p-2 bg-success rounded">
                     ข้อมูลส่วนบุคคล
                 </h2>
                 <div class="mb-3">
@@ -109,7 +128,7 @@
                 </div>
             </div>
             <div>
-                <h2 class="p-2 bg-danger rounded">
+                <h2 class="p-2 bg-success rounded">
                     ข้อมูลส่วนบุคคล
                 </h2>
                 <div class="mb-3">
