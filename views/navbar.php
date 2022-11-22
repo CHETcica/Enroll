@@ -17,7 +17,7 @@
             <a class="nav-link" href="./login.php">เข้าสู่ระบบ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./enroll.php">สาขาเเละจำนวนที่รับสมัคร</a>
+            <a class="nav-link" href="./enroll.php">สมัครเข้าศึกษาต่อ</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./dashboard.php">แผงควบคุม</a>
