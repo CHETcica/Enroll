@@ -76,11 +76,14 @@ class Registration
     return true;
   }
 
+  function getAllAvailableRegister()
+  {
+    return $this->openRegister->findAllOpenRegister();
+  }
   function getAvailableRegister($universityYear, $round, $type, $degree)
   {
     return $this->openRegister->findAllByRoundAndYear($universityYear, $round, $type, $degree);
   }
-
   function createEducationHistory($request)
   {
     if (!$_SESSION["is_login"]) {
@@ -96,7 +99,7 @@ class Registration
     $this->historyEducation->insert($data);
   }
 
-  function enroll($openRegisterEducation)
+  function enroll($request)
   {
     if (!$_SESSION["is_login"]) {
       return new Error("You're not login");
@@ -105,7 +108,7 @@ class Registration
       "id" => null,
       "is_approve" => 0,
       "user_id" => $_SESSION["id"],
-      "open_register_education" => $openRegisterEducation,
+      "open_register_education" => $_POST["openRegisterEducation"],
     ];
 
     $this->userRegister->insert($data);

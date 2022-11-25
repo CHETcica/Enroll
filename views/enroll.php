@@ -3,14 +3,12 @@
 require_once  "../configs/configs.php";
 require_once ROOT . "/controllers/registration.php";
 
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = Database::getInstance();
   $regisController = new Registration($db);
 
   try {
-    $isLogin = $regisController->enroll(1);
+    $isLogin = $regisController->enroll($_POST);
   } catch (Exception $e) {
     echo $e->getMessage();
   }
@@ -20,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $regisController = new Registration($db);
 
   try {
-    $AvailableRegister = $regisController->getAvailableRegister(1/2566, 1, 1, 1);
+    $AvailableRegister = $regisController->getAvailableRegister('1/2566', '1', '1', 'ปริณญาตรี');
+    var_dump($AvailableRegister);
   } catch (Exception $e) {
     echo $e->getMessage();
   }
@@ -41,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   <!-- JavaScript Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./index.css">
+
   <title>Document</title>
 </head>
 
@@ -92,14 +92,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
           </div>
           <div class="mb-3 col-sm-12 col-md-6 col-lg-3">
             <label for="type" class="form-label">ประเภท</label>
-            <select name="type" id="type" class="form-select">
+            <select onclick="changeDoc()" name="type" id="type" class="form-select">
               <option value="1">ทั่วไป</option>
 
             </select>
           </div>
           <div class="mb-3 col-sm-12 col-md-6 col-lg-3">
             <label for="degree" class="form-label">ปริญญา</label>
-            <select name="degree" id="degree" class="form-select">
+            <select onclick="changeDoc()" name="degree" id="degree" class="form-select">
               <option value="1">ปริญญาตรี</option>
             </select>
           </div>
@@ -115,30 +115,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
           </thead>
           <tbody>
 
-            <!-- <?php
-              // while($row = $AvailableRegister->fetch(PDO::FETCH_ASSOC)) {
-            ?> -->
-            <tr>
-              <th scope="row">45</th>
-              <td>วิศวกรรมซอฟต์แวร์</td>
-              <td>วิทยาศาสตร์</td>
-              <td><?php echo $row['']?></td>
-              <td>
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                  <button type="button" class="btn btn-success">สมัคร</button>
-                </div>
-              </td>
-            </tr>
-            <!-- <?php
-            // }
-            ?> -->
+            <?php
+            foreach ($AvailableRegister as $value) {
+            ?>
+              <tr>
+                <th scope="row"><?= $value["major_id"] ?></th>
+                <td><?= $value["major"] ?></td>
+                <td><?= $value["faculty"] ?></td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <form action="" method="post">
+                      <input type="hidden" name="openRegisterEducation" value="<?= $value["id"] ?>" type="text">
+                      <button type="submit" class="btn btn-success">สมัคร</button>
+                    </form>
+
+                  </div>
+                </td>
+              </tr>
+            <?php
+            }
+            ?>
           </tbody>
         </table>
       </div>
       <button type="submit" class="btn btn-primary">ลงทะเบียน</button>
     </form>
     <div>
-
+      <!-- <script>
+        function changeDoc() {
+          const xhttp = new XMLHttpRequest();
+          xhttp.onload = function() {
+            document.getElementById("demo").innerHTML = this.responseText;
+          }
+          xhttp.open("GET", "ajax_info.txt", true);
+          xhttp.send();
+        }
+      </script> -->
 </body>
 
 </html>
