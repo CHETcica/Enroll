@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   try {
     $isLogin = $regisController->login($_POST["national_id"], $_POST["password"]);
+   
   } catch (Exception $e) {
     echo $e->getMessage();
   }
@@ -17,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -42,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="">
           <div class="mb-3">
             <label for="national_id" class="form-label">National id</label>
-            <input name="national_id" type="text" class="form-control" id="national_id" >
+            <input name="national_id" type="text" class="form-control" id="national_id">
             <div id="emailHelp" class="form-text">We'll never share your national id with anyone else.</div>
           </div>
           <div class="mb-3">

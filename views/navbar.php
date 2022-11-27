@@ -1,5 +1,8 @@
-
-  <nav class="mb-3 navbar navbar-expand-lg  sticky-top shadown-redius-card">
+<?
+  session_start();
+  $user = "";
+?>
+<nav class="mb-3 navbar navbar-expand-lg  sticky-top shadown-redius-card">
     <div class="container">
       <a class="navbar-brand" href="/Enroll/views/"><img style="height: 50px;" src="./img/ตราสัญลักษณ์ประจำมหาวิทยาลัยราชภัฏพระนคร.png" alt=""></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,6 +24,15 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./dashboard.php">แผงควบคุม</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href=""><?php
+                
+                if($_SESSION["id"]){
+                  $user = $_SESSION["id"];
+                }
+                echo $user;
+            ?></a>
           </li>
         </ul>
       </div>
