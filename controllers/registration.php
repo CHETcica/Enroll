@@ -80,6 +80,7 @@ class Registration
   {
     return $this->openRegister->findAllOpenRegister();
   }
+
   function getAvailableRegister($universityYear, $round, $type, $degree)
   {
     return $this->openRegister->findAllByRoundAndYear($universityYear, $round, $type, $degree);
@@ -112,5 +113,14 @@ class Registration
     ];
 
     $this->userRegister->insert($data);
+  }
+  function getAllEnroll()
+  {
+    return $this->userRegister->findAllByEnroll();
+  }
+
+  function updateIsApprove($id, $status)
+  {
+    $this->userRegister->updateApproveByid($id, $status);
   }
 }

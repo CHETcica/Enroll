@@ -29,7 +29,9 @@ class OpenRegister extends BaseModel
     AND degree = '{$degree}'";
     $sql = "
     SELECT open_register.id as id, major_id, major.name as major, faculty.name as faculty
-    FROM `open_register` JOIN `major` on major.id=open_register.major_id JOIN `faculty` on faculty.id=major.faulty_id 
+    FROM `open_register` 
+    JOIN `major` on major.id=open_register.major_id 
+    JOIN `faculty` on faculty.id=major.faulty_id 
     WHERE {$condition}";
     $stmt = $this->db->prepare($sql);
     $stmt->execute();

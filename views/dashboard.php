@@ -1,3 +1,54 @@
+<?php
+
+require_once  "../configs/configs.php";
+require_once ROOT . "/controllers/registration.php";
+
+$studenList = [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $db = Database::getInstance();
+  $regisController = new Registration($db);
+
+  try {
+    $isLogin = $regisController->enroll($_POST);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+}
+
+function accept($id)
+{
+  $db = Database::getInstance();
+  $regisController = new Registration($db);
+  try {
+    $isLogin = $regisController->updateIsApprove('1700401323201', '1');
+    var_dump($isLogin);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+}
+function decline($id)
+{
+  $db = Database::getInstance();
+  $regisController = new Registration($db);
+  try {
+    $isLogin = $regisController->updateIsApprove($id , 0);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+}
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+  $db = Database::getInstance();
+  $regisController = new Registration($db);
+
+  try {
+    $studenList = $regisController->getAllEnroll();
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,30 +72,37 @@
   <table class="container table table-striped shadown-redius-card">
     <thead>
       <tr>
-        <th scope="col "></th>
-        <th scope="col py-auto">คำนำหน้า</th>
+
         <th scope="col">ชื้อ</th>
-        <th scope="col">นามสกุล</th>
-        <th scope="col">อีเมลที่สามารถติดต่อได้</th>
+        <th scope="col">สาขา</th>
+        <th scope="col">สถานะ</th>
         <th scope="col">การตอบกลับ</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>นาย</td>
-        <td>เจษฎากร</td>
-        <td>เมืองนาม</td>
-        <td>624259008@webmail.npru.ac.th</td>
-        <td>
-          <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-success">ยอมรับ</button>
-            <button type="button" class="btn btn-danger">ปฏิเสธ</button>
+      <?php
+      foreach ($studenList as $studen) {
+      ?>
+        <tr>
 
-          </div>
-        </td>
-      </tr>
-      
+          <td><?= $studen['fname'] ?></td>
+          <td><?= $studen['major'] ?></td>
+          <td><?php if ($studen['is_approve'] == 0) {
+                echo "ยังไม่ยืนยัน";
+              } else {
+                echo "ยืนยันแล้ว";
+              } ?></td>
+          <td>
+            <form action="dashboard.php" class="btn-group" role="group">
+              <button type="submit" onclick="accept('1700401323201')" class="btn btn-success">ยอมรับ</button>
+              <button type="submit" onclick="decline(<?= $studen['id'] ?>)" class="btn btn-danger">ปฏิเสธ</button>
+            </form>
+          </td>
+        </tr>
+      <?php
+      }
+      ?>
+
     </tbody>
   </table>
 </body>

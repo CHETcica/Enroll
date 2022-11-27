@@ -3,6 +3,7 @@
 require_once  "../configs/configs.php";
 require_once ROOT . "/controllers/registration.php";
 
+$AvailableRegister= [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = Database::getInstance();
   $regisController = new Registration($db);
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
   try {
     $AvailableRegister = $regisController->getAvailableRegister('1/2566', '1', '1', 'ปริณญาตรี');
-    var_dump($AvailableRegister);
+    
   } catch (Exception $e) {
     echo $e->getMessage();
   }
@@ -116,41 +117,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
           <tbody>
 
             <?php
-            foreach ($AvailableRegister as $value) {
-            ?>
-              <tr>
-                <th scope="row"><?= $value["major_id"] ?></th>
-                <td><?= $value["major"] ?></td>
-                <td><?= $value["faculty"] ?></td>
-                <td>
-                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <form action="" method="post">
-                      <input type="hidden" name="openRegisterEducation" value="<?= $value["id"] ?>" type="text">
-                      <button type="submit" class="btn btn-success">สมัคร</button>
-                    </form>
 
-                  </div>
-                </td>
-              </tr>
+            if ($AvailableRegister){
+              foreach ($AvailableRegister as $value) {
+            ?>
+                <tr>
+                  <th scope="row"><?= $value["major_id"] ?></th>
+                  <td><?= $value["major"] ?></td>
+                  <td><?= $value["faculty"] ?></td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                      <form action="" method="post">
+                        <input type="hidden" name="openRegisterEducation" value="<?= $value["id"] ?>" type="text">
+                        <button type="submit" class="btn btn-success">สมัคร</button>
+                      </form>
+
+                    </div>
+                  </td>
+                </tr>
             <?php
+              }
             }
             ?>
           </tbody>
         </table>
       </div>
-      <button type="submit" class="btn btn-primary">ลงทะเบียน</button>
+      
     </form>
     <div>
-      <!-- <script>
-        function changeDoc() {
-          const xhttp = new XMLHttpRequest();
-          xhttp.onload = function() {
-            document.getElementById("demo").innerHTML = this.responseText;
-          }
-          xhttp.open("GET", "ajax_info.txt", true);
-          xhttp.send();
-        }
-      </script> -->
 </body>
 
 </html>
